@@ -47,5 +47,3 @@ async def get_games(
 
     except Exception as e:
         raise HTTPException(status_code=500, detail="An error occurred while fetching games from DB.")
-
-
