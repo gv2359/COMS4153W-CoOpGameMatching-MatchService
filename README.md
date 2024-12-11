@@ -3,4 +3,7 @@ Microservice for matching service in Co-Op Game matching web application
 
 Run using:  python -m app.main
 
-Test action
+- Search for a game
+- Add a game to favorites
+- Create a match request
+- Initiate a match request
