@@ -103,12 +103,16 @@ class MatchRequestsResource(BaseResource):
         # Check if there is a matched request in the matched_requests table
         matched_request = d_service.get_data_object(self.database, self.matched_request_table, "matchRequestId1", match_request_id)
 
+        if not matched_request:
+            matched_request = d_service.get_data_object(self.database, self.matched_request_table, "matchRequestId2", match_request_id)
+
         if matched_request:
             return MatchMakingStatus(
                 matchRequestId=match_request_id,
                 status="matched",
                 partnerRequestId=matched_request["matchRequestId2"]
             )
+
 
         # If no match is found, return the appropriate status
         return MatchMakingStatus(
@@ -181,6 +185,12 @@ class MatchRequestsResource(BaseResource):
             user_id = match_request["userId"]
 
             while True:
+
+                match_request = d_service.get_data_object(self.database, self.match_request_table, self.key_field, match_request_id)
+                if not match_request or not match_request.get("isActive"):
+                    print(f"Exiting matchmaking process.")
+                    return
+
                 await asyncio.sleep(5)  # Check for matches every 5 seconds
 
                 # Fetch all active match requests for the same game
