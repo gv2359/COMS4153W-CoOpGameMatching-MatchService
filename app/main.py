@@ -5,6 +5,8 @@ from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 from app.resources.games_resource import GamesResource
 
+# it loads from the .env file
+load_dotenv()
 
 from app.routers import games, match_requests, favourites
 
@@ -18,8 +20,6 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
-# it loads from the .env file
-load_dotenv()
 
 app.include_router(games.router)
 app.include_router(match_requests.router)
